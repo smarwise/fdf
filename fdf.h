@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 15:58:49 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/22 15:52:16 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 11:00:45 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct					s_points
 	struct s_points				*up;
 }								t_points;
 
+typedef struct					s_do
+{
+	int							**tab;
+	char						**str1;
+	char						*line;
+}								t_do;
+
+void							free_t_point(t_points *head);
 typedef struct					s_more
 {
 	int							x;

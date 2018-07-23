@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_from_file.c                                   :+:      :+:    :+:   */
+/*   free_t_points.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/11 13:17:37 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 10:09:57 by smarwise         ###   ########.fr       */
+/*   Created: 2018/07/23 10:45:20 by smarwise          #+#    #+#             */
+/*   Updated: 2018/07/23 10:49:42 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-char		**read_file(int fd)
+void			free_t_point(t_points *head)
 {
-	char	*line;
-	char	**c_array;
-	int		n;
+	t_points	*trav;
 
-	n = 0;
-	c_array = (char **)malloc(sizeof(char *) * (20));
-	while (get_next_line(fd, &line) == 1)
+	trav = head;
+	while (trav)
 	{
-		c_array[n] = ft_strdup(line);
-		ft_strdel(&line);
-		n++;
+		trav = trav->next;
+		free(head);
+		head = trav;
 	}
-	c_array[n] = NULL;
-	return (c_array);
 }

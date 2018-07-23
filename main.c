@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/06 08:48:29 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/22 15:07:12 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 10:42:49 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 #include "fdf.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+void		tidy_up(t_fds f, t_points *head)
+{
+	close(f.fd);
+	close(f.fd1);
+	close(f.fd2);
+	free_t_point(head);
+}
 
 int			main(int argc, char **argv)
 {
@@ -36,6 +44,7 @@ int			main(int argc, char **argv)
 		mlx_key_hook(env.mlx.win, key_set, env.points);
 		mlx_loop_hook(env.mlx.mlx, print_map, &env);
 		mlx_loop(env.mlx.mlx);
+		tidy_up(f, env.points);
 	}
 	return (0);
 }

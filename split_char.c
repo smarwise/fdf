@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 08:04:39 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/22 16:05:09 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 11:01:08 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,44 +36,45 @@ int			ft_count_words(char *str)
 	return (count);
 }
 
-int			**real_split_char(t_axis counter, char *line, int fd, char **str)
+int			**real_split_char(t_axis counter, t_do c, int fd, char **str)
 {
-	int		l;
-	char	**str1;
-	int		**tab;
-
-	while (get_next_line(fd, &line) == 1)
+	while (get_next_line(fd, &c.line) == 1)
+	{
 		counter.j++;
-	tab = (int **)malloc(sizeof(int *) * (counter.j + 1));
+		ft_strdel(&c.line);
+	}
+	c.tab = (int **)malloc(sizeof(int *) * (counter.j + 1));
 	while (counter.n < counter.j)
 	{
 		counter.a = 0;
-		str1 = ft_strsplit(str[counter.i], ' ');
-		l = ft_count_words(str[counter.i]);
-		tab[counter.n] = (int *)malloc(sizeof(int) * (l + 1));
-		while (l > 0)
+		c.str1 = ft_strsplit(str[counter.i], ' ');
+		counter.x = ft_count_words(str[counter.i]);
+		c.tab[counter.n] = (int *)malloc(sizeof(int) * (counter.x + 1));
+		while (counter.x > 0)
 		{
-			tab[counter.n][counter.a] = ft_atoi(str1[counter.a]);
+			c.tab[counter.n][counter.a] = ft_atoi(c.str1[counter.a]);
 			counter.a++;
-			l--;
+			counter.x--;
 		}
-		tab[counter.n][counter.a] = '\0';
+		c.tab[counter.n][counter.a] = '\0';
 		counter.i++;
 		counter.n++;
+		free_2d_array((void**)c.str1);
 	}
-	tab[counter.n] = NULL;
-	return (tab);
+	c.tab[counter.n] = NULL;
+	return (c.tab);
 }
 
 int			**split_char(char **str, int fd)
 {
 	t_axis	counter;
-	char	*line;
+	t_do	c;
 
 	counter.i = 0;
 	counter.n = 0;
 	counter.j = 0;
+	counter.x = 0;
 	counter.a = 0;
-	line = NULL;
-	return (real_split_char(counter, line, fd, str));
+	c.line = NULL;
+	return (real_split_char(counter, c, fd, str));
 }

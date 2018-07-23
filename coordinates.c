@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 15:13:43 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/22 16:17:24 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 10:33:36 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,21 @@ t_points			*coordinates(int **tab, int fd)
 	char			*line;
 	t_points		*lst;
 	t_points		*head;
+	char			**arrayline;
 
+	arrayline = NULL;
 	cnt.j = 0;
 	cnt.a = 0;
 	cnt.y = 0;
 	cnt.x = 0;
 	initialize(cnt.j, cnt.a, cnt.y, cnt.x);
 	while (get_next_line(fd, &line) == 1)
+	{
 		cnt.j++;
-	cnt.a = ft_count_words(line);
+		arrayline = arraypush(arrayline, line);
+	}
+	cnt.a = ft_count_words(arrayline[arraylen(arrayline) - 1]);
+	free_2d_array((void**)arrayline);
 	head = (t_points *)ft_memalloc(sizeof(t_points));
 	lst = head;
 	if (head == NULL)

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_from_file.c                                   :+:      :+:    :+:   */
+/*   free_2d_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/11 13:17:37 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 10:09:57 by smarwise         ###   ########.fr       */
+/*   Created: 2018/07/23 11:03:43 by smarwise          #+#    #+#             */
+/*   Updated: 2018/07/23 11:03:48 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include <stdlib.h>
 
-char		**read_file(int fd)
+void		free_2d_array(void **array)
 {
-	char	*line;
-	char	**c_array;
-	int		n;
+	int		i;
 
-	n = 0;
-	c_array = (char **)malloc(sizeof(char *) * (20));
-	while (get_next_line(fd, &line) == 1)
+	i = 0;
+	while (array[i])
 	{
-		c_array[n] = ft_strdup(line);
-		ft_strdel(&line);
-		n++;
+		free(array[i]);
+		i++;
 	}
-	c_array[n] = NULL;
-	return (c_array);
+	free(array);
 }

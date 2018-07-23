@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/21 11:36:44 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/11 13:29:51 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 10:27:16 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+char				**arraypush(char **array, char *str);
+int					arraylen(char **array);
+void				free_2d_array(void **array);
 size_t				ft_strlen(const char *s);
 char				*ft_strdup(const char *s1);
 char				*ft_strcpy(char *dst, const char *src);
