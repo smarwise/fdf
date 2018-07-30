@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/17 15:13:43 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 10:33:36 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/30 08:03:58 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,70 +17,81 @@ t_points			*get_link(int link, t_points *head)
 {
 	while (--link)
 		head = head->next;
+	if (head)
+		return (head);
+	else
+		return (NULL);
+}
+
+t_points			*rot_x(t_points *points, double angle, t_points *head)
+{
+	double			y;
+
+	points = head;
+	while (points)
+	{
+		y = cos(angle) * points->y - sin(angle) * points->z;
+		points->z = cos(angle) * points->z + sin(angle) * points->y;
+		points->y = y;
+		points = points->next;
+	}
+	points = head;
 	return (head);
 }
 
-void				initialize(int j, int a, int y, int x)
-{
-	j = 0;
-	a = 0;
-	y = 0;
-	x = 0;
-}
-
 t_points			*allocate(t_axis cnt,
-		t_points *lst, t_points *head, int **tab)
+		t_points *lst, t_points *head, char **argv)
 {
-	while (cnt.y < cnt.j)
+	while (cnt.y < cnt.rows)
 	{
 		cnt.x = 0;
-		while (cnt.x < cnt.a)
+		while (cnt.x < cnt.columns)
 		{
-			lst->x = cnt.x - cnt.a / 2;
-			lst->y = cnt.y - cnt.j / 2;
-			lst->z = tab[cnt.y][cnt.x];
+			lst->x = cnt.x - cnt.columns / 2;
+			lst->y = cnt.y - cnt.rows / 2;
 			cnt.x++;
-			if (cnt.y < cnt.j || cnt.x < cnt.a)
-				lst->next = (t_points*)ft_memalloc(sizeof(t_points));
-			if (cnt.x < cnt.a)
+			if (cnt.x < cnt.columns)
 				lst->right = lst->next;
+			else
+				lst->right = NULL;
 			if (cnt.y)
-				lst->up = get_link((cnt.y - 1) * cnt.a + cnt.x, head);
-			if (lst->z >= 0 && lst->z <= 10)
+				lst->up = get_link((cnt.y - 1) * cnt.columns + cnt.x, head);
+			else
+				lst->up = NULL;
+			if (!argv[2] || !argv[3])
 				lst->c = lst->z > 0 ? 0xeff628 : 0x28acf6;
 			else
-				lst->c = lst->z > 0 ? 0x50be62 : 0xf62f28;
+				lst->c = lst->z > 0 ? ft_atoi(argv[3]) : ft_atoi(argv[2]);
 			lst = lst->next;
 		}
 		cnt.y++;
 	}
-	return (head);
+	ft_putendl("\nleaving allocate()");
+	return (rot_x(lst, 10 * M_PI / 180, head));
 }
 
-t_points			*coordinates(int **tab, int fd)
+t_points			*coordinates(char **str, t_rows d, char **argv)
 {
 	t_axis			cnt;
-	char			*line;
 	t_points		*lst;
 	t_points		*head;
-	char			**arrayline;
 
-	arrayline = NULL;
-	cnt.j = 0;
-	cnt.a = 0;
 	cnt.y = 0;
-	cnt.x = 0;
-	initialize(cnt.j, cnt.a, cnt.y, cnt.x);
-	while (get_next_line(fd, &line) == 1)
-	{
-		cnt.j++;
-		arrayline = arraypush(arrayline, line);
-	}
-	cnt.a = ft_count_words(arrayline[arraylen(arrayline) - 1]);
-	free_2d_array((void**)arrayline);
+	cnt.rows = d.rows;
+	cnt.columns = d.columns;
 	head = (t_points *)ft_memalloc(sizeof(t_points));
-	lst = head;
 	if (head == NULL)
 		return (NULL);
-	return (allocate(cnt, lst, head, tab));
+	lst = head;
+	lst = get_height(str, d, lst);
+	free_2d_array((void**)str);
+	lst = head;
+	while (lst)
+	{
+		lst->scale = 25;
+		lst->shift = 400;
+		lst = lst->next;
+	}
+	lst = head;
+	return (allocate(cnt, lst, head, argv));
 }

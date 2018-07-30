@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:04:21 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 11:05:29 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/23 18:07:17 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char		**arraypush(char **array, char *str)
 		}
 		newarr[i] = ft_strdup(str);
 		newarr[++i] = NULL;
-		free_2d_array((void**)array);
+//		free_2d_array((void**)array);
 	}
 	return (newarr);
 }

@@ -1,0 +1,21 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		
+		{
+			"debug": "(lldb) Launch",
+			"type": "cppdbg",
+			"request": "launch",
+			./fdf : "enter program name, for example ${workspaceFolder}/a.out",
+			"args": tets_maps/42.fdf,
+			"mlx": false,
+			"~Desktop/fdf": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": true,
+			"MIMode": "lldb"
+		}
+	]
+}

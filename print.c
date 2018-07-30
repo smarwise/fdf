@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_map.c                                        :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/14 11:28:00 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/22 14:59:09 by smarwise         ###   ########.fr       */
+/*   Created: 2018/07/28 09:25:42 by smarwise          #+#    #+#             */
+/*   Updated: 2018/07/29 12:34:31 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ int					print_map(t_env *env)
 	while (points)
 	{
 		c.color = points->c;
-		if (points->right)
+		if (points->right != NULL && points)
 		{
-			c.x0 = points->x * 25 + 400;
-			c.y0 = points->y * 25 + 400;
-			draw(c, points->right->x * 25 + 400,
-					points->right->y * 25 + 400, env->mlx);
+			c.x0 = points->x * points->scale + points->shift;
+			c.y0 = points->y * points->scale + points->shift;
+			draw(c, points->right->x * points->scale + points->shift,
+					points->right->y * points->scale + points->shift, env->mlx);
 		}
-		if (points->up)
+		if (points->up != NULL && points)
 		{
-			c.x0 = points->x * 25 + 400;
-			c.y0 = points->y * 25 + 400;
-			draw(c, points->up->x * 25 + 400,
-					points->up->y * 25 + 400, env->mlx);
+			c.x0 = points->x * points->scale + points->shift;
+			c.y0 = points->y * points->scale + points->shift;
+			draw(c, points->up->x * points->scale + points->shift,
+					points->up->y * points->scale + points->shift, env->mlx);
 		}
 		points = points->next;
 	}

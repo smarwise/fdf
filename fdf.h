@@ -6,7 +6,7 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/09 15:58:49 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 11:00:45 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/29 10:27:45 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <math.h>
 # include <mlx.h>
 # include <stdlib.h>
+# include <stdio.h>
 
-char							**read_file(int fd);
 int								ft_count_words(char *str);
 int								**split_char(char **str, int fd);
 
@@ -35,49 +35,22 @@ typedef struct					s_points
 	double						y;
 	double						z;
 	int							c;
+	int							scale;
+	int							shift;
 	struct s_points				*next;
 	struct s_points				*right;
 	struct s_points				*up;
 }								t_points;
 
-typedef struct					s_do
-{
-	int							**tab;
-	char						**str1;
-	char						*line;
-}								t_do;
-
 void							free_t_point(t_points *head);
-typedef struct					s_more
-{
-	int							x;
-	int							y;
-	int							z;
-	int							x1;
-	int							y1;
-	int							x2;
-	int							y2;
-	int							x3;
-	int							y3;
-}								t_more;
-
-typedef struct					s_coord
-{
-	int							x;
-	int							y;
-	int							z;
-	int							angle;
-	int							w;
-}								t_coord;
 
 typedef struct					s_axis
 {
-	int							i;
-	int							n;
-	int							j;
-	int							a;
 	int							x;
 	int							y;
+	int							rows;
+	int							columns;
+	char						**array;
 }								t_axis;
 
 typedef struct					s_env
@@ -100,30 +73,35 @@ typedef struct					s_draw
 typedef struct					s_coordinates
 {
 	int							x0;
-	int							x1;
 	int							y0;
-	int							y1;
 	int							color;
 }								t_coordinates;
+
+typedef struct					s_rows
+{
+	int							rows;
+	int							columns;
+}								t_rows;
 
 typedef struct					s_fds
 {
 	int							fd;
 	int							fd1;
-	int							fd2;
 }								t_fds;
 
+char							**test(int fd);
 int								print_map(t_env *env);
+t_points						*get_height(char **str, t_rows d,
+		t_points *lst);
+char							**read_file(int fd, t_rows d);
 int								key_set(int keycode, t_points *points);
-void							drawline(t_coordinates c, int x1,
-								int y1, t_key mlx);
-void							draw_straight_line(int x0, int y0,
-								int x1, int y1, t_key mlx, int color);
-t_points						*coordinates(int **tab, int fd);
+t_points						*coordinates(char **str, t_rows d, char **argv);
 void							draw(t_coordinates c, int x1,
 								int y1, t_key mlx);
-void							drawl(int x0, int y0, int x1,
-								int y1, t_key mlx, int color);
+t_rows							dimensions(int fd);
 double							ft_abs(double n);
+void							zoomforme(t_points *points, int keycode);
+void							shiftforme(t_points *points, int keycode);
+void							rotateforme(t_points *points, int keycode);
 
 #endif

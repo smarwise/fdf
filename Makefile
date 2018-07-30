@@ -6,15 +6,15 @@
 #    By: smarwise <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/05/19 08:14:41 by smarwise          #+#    #+#              #
-#    Updated: 2018/07/23 10:40:14 by smarwise         ###   ########.fr        #
+#    Updated: 2018/07/28 13:49:27 by smarwise         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
-FLAGS = gcc -Wall -Wextra -Werror
+FLAGS = gcc -Wall -Wextra -Werror -Wuninitialized
 
-OBJ = free_t_points.o main.o key_set.o read_from_file.o split_char.o drawline.o coordinates.o print_map.o
+OBJ = rotate.o shift.o get_height.o dimensions.o free_t_points.o main.o key_set.o read_from_file.o drawline.o coordinates.o print.o zoom.o
 
 $(NAME): $(OBJ)
 	$(FLAGS) -o $(NAME) $(OBJ) -lmlx -framework OpenGL -framework AppKit libft/libft.a

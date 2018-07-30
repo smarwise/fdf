@@ -6,11 +6,11 @@
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/23 11:03:43 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/23 11:03:48 by smarwise         ###   ########.fr       */
+/*   Updated: 2018/07/28 15:21:44 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
 
 void		free_2d_array(void **array)
 {

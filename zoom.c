@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_set.c                                          :+:      :+:    :+:   */
+/*   zoom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smarwise <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/09 13:10:37 by smarwise          #+#    #+#             */
-/*   Updated: 2018/07/28 13:51:29 by smarwise         ###   ########.fr       */
+/*   Created: 2018/07/28 13:20:15 by smarwise          #+#    #+#             */
+/*   Updated: 2018/07/28 14:06:10 by smarwise         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int			key_set(int keycode, t_points *points)
+void		zoomout(t_points *points)
 {
-	int		i;
+	while (points)
+	{
+		points->scale += 1;
+		points = points->next;
+	}
+}
 
-	i = 0;
-	if (keycode == 53)
-		exit(0);
-	if (keycode == 88 || keycode == 86 || keycode == 11
-			|| keycode == 40 || keycode == 16 || keycode == 2)
-		rotateforme(points, keycode);
-	if (keycode == 69 || keycode == 78)
-		zoomforme(points, keycode);
-	if (keycode == 126 || keycode == 125 || keycode == 123 || keycode == 124)
-		shiftforme(points, keycode);
-	return (0);
+void		zoomin(t_points *points)
+{
+	while (points)
+	{
+		points->scale -= 1;
+		points = points->next;
+	}
+}
+
+void		zoomforme(t_points *points, int keycode)
+{
+	if (keycode == 69)
+		zoomout(points);
+	if (keycode == 78)
+		zoomin(points);
 }
